@@ -14,6 +14,7 @@ const Help = require("./models/support");
 const cookieParser = require("cookie-parser");
 const auth = require("./auth");
 const { nextTick } = require("process");
+const dbConnection=require("./models/connection")
 const PORT = process.env.PORT || 5000
 const app = express();
 
@@ -28,10 +29,10 @@ app.use('images', express.static(__dirname + "/images"));
 
 // Global configuration access setup
 dotenv.config();
-
-mongoose.connect("mongodb://127.0.0.1:27017/airbnbClone", function () {
-    console.log("Successfully connected to database");
-})
+dbConnection()
+// mongoose.connect("mongodb://127.0.0.1:27017/airbnbClone", () => {
+//     console.log("Successfully connected to database");
+// })
 
 // mongoose.connect('mongodb+srv://Bimal123:<password>@cluster0.ia2jgkh.mongodb.net/AirbnbClone', { useNewUrlParser: true });
 
