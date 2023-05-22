@@ -192,7 +192,7 @@ app.get("/myairbnb", auth, async function (req, res) {
 
         Propertymodel.find({}, function (err, result) {
             if (err) {
-                res.send(err);
+                res.render("my", { properties: result, isGuest: isGuest, user: userNamedb });
             } else {
                 res.render("my", { properties: result, isGuest: isGuest, user: userNamedb });
             }
