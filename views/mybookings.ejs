@@ -55,7 +55,7 @@
 
     <% if(myBookings.length == 0) { %>
         <div>
-            <h1>You don't have any booking. Please book from home page</h1>
+            <h1>You don't have any booking.</h1>
         </div>
     <% }  else { %>
 
@@ -77,8 +77,8 @@
                 <p>Nights: <%=element.nights%></p>
                 <p>Rooms: <%=element.rooms%></p>
                 <p>Guests: <%=element.guests%></p>
-                <form action="/deletebooking" method="GET">
-                    <input type="hidden" name="cancelProperty" value="<%=element._id%>">
+                <form action="/cancelbooking" method="GET">
+                    <input type="hidden" name="propertyId" value="<%=element._id%>">
                     <button type="submit" class="cancel btn btn-outline-danger">Cancel Booking</button>
                 </form>
             </div>
