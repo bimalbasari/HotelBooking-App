@@ -36,6 +36,7 @@
 <hr>
 
 <!-- login sign up pop up on button click -->
+
 <div id="popupDiv">
     <ul class="loginPopup">
         <li><button><a style="color: inherit; text-decoration: none;" href="/register">Sign up</a></button></li>
@@ -52,9 +53,7 @@
         <h3 class="mt-3">Please share your experience</h3>
     </div>
     <div class="mt-3 p-5">
-        <form action="" method="POST" id="formId">
-            <label for="name">Name</label><br>
-            <input type="text" class="form-control" name="name" required><br>
+        <form action="/review/<%=propertyId%>" method="POST" id="formId">
             <label for="starRating" class="form-label">Star Rating</label>
             <input type="range" class="form-range" name="starRating" min="0" max="5" step="0.5" id="starRating">
             <div>
@@ -70,20 +69,5 @@
         </form>
     </div>
 </div>
-
-
-<script>
-    let x = window.location.pathname;
-    console.log(x);
-    let formData = document.getElementById("formId");
-    formData.setAttribute("action", x);
-
-    var slider = document.getElementById("starRating");
-    var output = document.getElementById("rating");
-    output.innerHTML = slider.value;
-    slider.oninput = function () {
-        output.innerHTML = this.value;
-    }
-</script>
 
 <%- include('footer') -%>
