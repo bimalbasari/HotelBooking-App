@@ -18,7 +18,7 @@ button{
 }
 
 button.primary{
-    @apply bg-yellow-400 p-2 w-full text-white rounded-2xl;
+    @apply bg-yellow-400 p-2 w-full text-white rounded-2xl active:bg-blue-800 ;
 }
 label{
     @apply font-semibold text-xl

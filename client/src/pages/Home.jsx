@@ -3,12 +3,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Home() {
+  const fetchProperty = async () => {
+    try {
+      const response = await axios.get('/properties/')
+      setPlaces(response.data.result);
+    } catch (err) {
+      console.log(err)
+    }
 
+  }
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    axios.get('/properties').then(response => {
-      setPlaces(response.data.result);
-    });
+    fetchProperty()
   }, [])
 
   return (
@@ -22,7 +28,7 @@ export default function Home() {
               <img className="rounded-2xl object-cover aspect-square" src={'http://localhost:5000/' + place.img?.[0]} alt="" />
             )}
           </div>
-          {console.log(place._id)}
+
           <div className="px-2">
             <h2 className=" text-gray-700 font-bold text-2xl"> {place.title}</h2>
             <h3 className="text-green-800 font-semibold ">{place.country},{place?.state},{place?.city}</h3>

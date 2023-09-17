@@ -27,7 +27,7 @@ function Amenties({ property }) {
             <PropertyFeature property={property?.kitchen} icon={<FaKitchenSet />} text="Kitchen" />
             <PropertyFeature property={property?.tv} icon={<BsTv />} text="HDTV with standard cable/satellite TV" />
             <PropertyFeature property={property?.petsAllowed} icon={<FaPaw />} text="Pets Allowed" />
-            <PropertyFeature property={property?.airconditioning} icon={<FaSnowflake />} text="AC - split-type ductless system" />
+            <PropertyFeature property={property?.aircondition} icon={<FaSnowflake />} text="AC - split-type ductless system" />
             <PropertyFeature property={property?.workspace} icon={<FaHouseLaptop />} text="Dedicated workspace" />
             <PropertyFeature property={property?.alarm} icon={<BsBell />} text="Alarm" />
             <PropertyFeature property={property?.privateEntrance} icon={<BsDoorOpenFill/>} text="Private Entrance" />

@@ -1,26 +1,55 @@
 import axios from "axios";
-import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router-dom";
-// import { UserContext } from "../UserContext";
+import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form"
+import { Link,  useNavigate } from "react-router-dom";
+import { userContext } from "../App.jsx";
 
 export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const { setUser, user, setAlert, alert } = useContext(userContext);
     const [showPwd, setShowPwd] = useState(false);
-    const [user, setUser] = useState("")
-    // const { setUser } = useContext(UserContext);
+    const navigate = useNavigate()
+    // const history = useHistory()
 
-    async function onSubmit(data) {
+    const onSubmit = async (data) => {
         try {
-            const user = await axios.post('/auth/login', data, { headers: { 'Content-Type': 'application/json' } });
+            const Data = await axios.post('/auth/login', data, { headers: { 'Content-Type': 'application/json' } });
 
-            if (user?.data) {
-                setUser(user?.data);
-                <Navigate to={'/'} />
+            if (Data) {
+                setUser(Data?.data.user);
+                // history.goBack();
             }
-        } catch (err) { alert('login failed') }
-    }
+        } catch (err) {
+            if (err?.response.status === 401) {
+                setAlert({
+                    ...alert,
+                    message: err?.response.data.message,
+                    link: "login",
+                    text: "Try again"
+                })
+            } else if (err?.response.status === 400) {
+                setAlert({
+                    ...alert,
+                    message: err?.response.data.message,
+                    link: "register",
+                    text: "Register"
+                })
+            } else {
+                setAlert({
+                    ...alert,
+                    message: err?.response.data.message,
+                    link: "",
+                    text: ""
+                })
+            }
 
+        }
+    }
+    useEffect(() => {
+        if (user) {
+            navigate("/")
+        }
+    }, [user])
     return (
         <div className="mt-4 grow flex items-center justify-around ">
             <div className="flex h-3/4 w-4/5 rounded-lg overflow-hidden">
@@ -47,7 +76,7 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        <button className="primary font-semibold mt-4 text-xl">Login</button>
+                        <button type="submit" className="primary font-semibold mt-4 text-xl">Login</button>
                         <div className="sm:hidden w-full text-xl text-white">
                             <NewUser />
                         </div>

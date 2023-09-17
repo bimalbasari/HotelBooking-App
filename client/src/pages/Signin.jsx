@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import { useForm } from "react-hook-form"
 
@@ -35,8 +35,13 @@ export default function RegisterPage() {
                         "Content-Type": "multipart/form-data",
                     },
                 });
+                if (register) {
+                    <Navigate to="/login" />
+                }else{
+                    alert()
+                }
                 // alert('Registration suceessful. Now you can login')
-                console.log(register)
+
             }
         } catch (error) {
             // alert('Resistration falied. please try again later');
@@ -57,7 +62,7 @@ export default function RegisterPage() {
                         <div className="mb-4 flex items-center justify-center">
                             <label className="sm:h-48 sm:w-48 w-32 h-32 cursor-pointerflex items-center justify-center rounded-full object-cover overflow-hidden">
                                 <input type="file" className="hidden" name="picture" onChange={handlePic} required />
-                                <img src={picture ? previewURL : "/user_dummy.png"} alt="user"  className='w-full h-full' />
+                                <img src={picture ? previewURL : "/user_dummy.png"} alt="user" className='w-full h-full' />
                             </label>
                         </div>
                         <label className="mb-4">Profile picture</label>

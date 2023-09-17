@@ -8,43 +8,46 @@ import { useForm } from "react-hook-form";
 
 
 export default function HostProperty() {
-    const { register, handleSubmit, formState: { erors }, watch } = useForm()
+    const { register, handleSubmit, setValue, formState: { erors }, watch } = useForm()
     const { id } = useParams();
     const country = Country.getAllCountries()
     const countryIso = watch('country')?.slice(0, 2).toUpperCase()
-    const states = State.getStatesOfCountry(countryIso);
-    const stateIso = watch("state")?.slice(0, 2).toUpperCase()
+    const states = State?.getStatesOfCountry(countryIso);
+    const stateData = watch("state")
+    const stateIso = stateData?.slice(0, 2)
+    const state = stateData?.slice(2)
     const city = City.getCitiesOfState(countryIso, stateIso)
     const [redirect, setRedirect] = useState(false);
     const [pictures, setPictures] = useState([])
 
     const onSubmit = async (data) => {
-        const formData = new FormData();
 
+        // const formData = new FormData();
+        // console.log(data)
         // Append text input fields to formData
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
+        // for (const key in data) {
+        //     formData.append(key, data[key]);
+        // }
 
-        // Append pictures to formData
-        pictures.forEach((picture, index) => {
-            formData.append(`pictures`, picture);
-        });
+        // // Append pictures to formData
+        // pictures.forEach((picture, index) => {
+        //     formData.append(`pictures`, picture);
+        // });
 
         // Now you can submit the formData to your server using axios or any other method.
         try {
-            const data = await axios.post("/host/property", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            // const data = await axios.post("/host/property", formData, {
+            //     headers: {
+            //         "Content-Type": "multipart/form-data",
+            //     },
+            // });
 
-            if (data) {
-                console.log(data)
-                console.log(data.data)
-            } else {
-                // Handle error.
-            }
+
+            // if (data) {
+
+            // } else {
+            //     // Handle error.
+            // }
         } catch (error) {
             console.log(error)
             // Handle the error.
@@ -100,7 +103,7 @@ export default function HostProperty() {
 
                     <div className="col-span-2 ">
                         {preInput("Country")}
-                        <select name="country"  {...register("country", { required: true })}>
+                        <select name="country"  {...register("country")}>
                             <option value="">Choose...</option>
                             {country.map(e => <option key={e.name} value={e.name}>{e.name}</option>)}
                         </select>
@@ -108,16 +111,16 @@ export default function HostProperty() {
 
                     <div className="col-span-2">
                         {preInput("State")}
-                        <select name="state" {...register("state", { required: true })}>
+                        <select name="state" {...register("state")}>
                             <option value="">Choose...</option>
                             {states?.map((e) => (
-                                <option key={e.name} value={`${e.isoCode}${e.name}`}>{e.name}</option>
+                                <option key={e.name} value={`${e.isoCode},${e.name}`}>{e.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className="col-span-2">
                         {preInput("City")}
-                        <select name="city" {...register("city", { required: true })}>
+                        <select name="city" {...register("city")}>
                             <option value="">Choose...</option>
                             {city?.map((e) => (
                                 <option key={e.name} value={e.name}>{e.name}</option>
@@ -253,7 +256,7 @@ export default function HostProperty() {
                         Dedicated workspace
                         <input
 
-                        
+
                             type="checkbox"
                             {...register("workspace")}
                             name="workspace"
